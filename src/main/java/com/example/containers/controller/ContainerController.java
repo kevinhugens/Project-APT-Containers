@@ -22,9 +22,15 @@ public class ContainerController {
         return containerRepository.findContainerById(id);
     }
 
-    @GetMapping("/containers/gewicht/{gewichtMin}&{gewichtMax}")
+    @GetMapping("/containers/schip/{schipId}")
+    public List<Container> getContainerBySchipId(
+            @PathVariable int schipId) {
+        return containerRepository.findContainersBySchipId(schipId);
+    }
+
+    @GetMapping("/containers/gewicht/{gewichtMin}/{gewichtMax}")
     public List<Container> getContainersByGewichtBetween(
-            @PathVariable float gewichtMin, @PathVariable float gewichtMax) {
+            @PathVariable double gewichtMin, @PathVariable double gewichtMax) {
         return containerRepository.findContainersByGewichtBetween(gewichtMin, gewichtMax);
     }
 
@@ -34,13 +40,13 @@ public class ContainerController {
         return containerRepository.findContainersByInhoudContaining(inhoud);
     }
 
-    @GetMapping("/containers/startLocatie/{startLocatie}")
+    @GetMapping("/containers/startlocatie/{startLocatie}")
     public List<Container> getContainersByStartLocatieContaining(
             @PathVariable String startLocatie) {
         return containerRepository.findContainersByStartLocatieContaining(startLocatie);
     }
 
-    @GetMapping("/containers/eindLocatie/{eindLocatie}")
+    @GetMapping("/containers/eindlocatie/{eindLocatie}")
     public List<Container> getContainersByEindLocatieContaining(
             @PathVariable String eindLocatie) {
         return containerRepository.findContainersByEindLocatieContaining(eindLocatie);

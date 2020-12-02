@@ -11,7 +11,9 @@ public interface ContainerRepository extends JpaRepository<Container, Integer> {
 
     Container findContainerById(int id);
 
-    List<Container> findContainersByGewichtBetween(float gewichtMin, float gewichtMax);
+    List<Container> findContainersBySchipId(int schipId);
+
+    List<Container> findContainersByGewichtBetween(double gewichtMin, double gewichtMax);
 
     List<Container> findContainersByInhoudContaining(String inhoud);
 
