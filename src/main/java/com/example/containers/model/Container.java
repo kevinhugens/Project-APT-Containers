@@ -1,19 +1,21 @@
 package com.example.containers.model;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 public class Container {
 
-    public Container(
-            int schipId,
-            double gewicht,
-            String inhoud,
-            String startLocatie,
-            String eindLocatie ) {
-
-    }
+//    public Container(
+//            int schipId,
+//            double gewicht,
+//            String inhoud,
+//            String startLocatie,
+//            String eindLocatie ) {
+//
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Container {
 
     private int schipId;
 
-    private float gewicht;
+    private double gewicht;
 
     private String inhoud;
 
@@ -29,4 +31,15 @@ public class Container {
 
     private String eindLocatie;
 
+    public Container() {
+
+    }
+
+    public Container(int schipId, double gewicht, String inhoud, String startLocatie, String eindLocatie) {
+        this.schipId = schipId;
+        this.gewicht = gewicht;
+        this.inhoud = inhoud;
+        this.startLocatie = startLocatie;
+        this.eindLocatie = eindLocatie;
+    }
 }
