@@ -1,11 +1,16 @@
 package com.example.containers.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Getter
+@Setter
 public class Container {
 
     @Id
@@ -21,54 +26,6 @@ public class Container {
     private String startLocatie;
 
     private String eindLocatie;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getSchipId() {
-        return schipId;
-    }
-
-    public void setSchipId(int schipId) {
-        this.schipId = schipId;
-    }
-
-    public double getGewicht() {
-        return gewicht;
-    }
-
-    public void setGewicht(double gewicht) {
-        this.gewicht = gewicht;
-    }
-
-    public String getInhoud() {
-        return inhoud;
-    }
-
-    public void setInhoud(String inhoud) {
-        this.inhoud = inhoud;
-    }
-
-    public String getStartLocatie() {
-        return startLocatie;
-    }
-
-    public void setStartLocatie(String startLocatie) {
-        this.startLocatie = startLocatie;
-    }
-
-    public String getEindLocatie() {
-        return eindLocatie;
-    }
-
-    public void setEindLocatie(String eindLocatie) {
-        this.eindLocatie = eindLocatie;
-    }
 
     public Container() {
 
