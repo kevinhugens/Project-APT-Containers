@@ -50,7 +50,7 @@ jobs:
       - name: Upload Maven build artifact
         uses: actions/upload-artifact@v1
         with:
-          name: schepen-artifact.jar
+          name: container-artifact.jar
           path: ./target/containers-0.0.1-SNAPSHOT.jar
 
       - name: Docker login
