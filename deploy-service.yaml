@@ -1,0 +1,92 @@
+apiVersion: v1                    # API version
+kind: Service                     # Type of kubernetes resource
+metadata:
+  name: project-apt-containers-postgres   # Name of the service
+  labels:                         # Labels that will be applied to the service
+    app: project-apt-containers
+spec:
+  ports:
+    - port: 5432
+  selector:                       # Selects any Pod with labels `app=book-info-service,tier=mysql`
+    app: project-apt-containers
+    tier: postgres
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: Deployment                    # Type of the kubernetes resource
+metadata:
+  name: project-apt-containers-postgres-deployment           # Name of the deployment
+  labels:                           # Labels applied to this deployment
+    app: project-apt-containers
+spec:
+  selector:
+    matchLabels:                    # This deployment applies to the Pods matching the specified labels
+      app: project-apt-containers
+      tier: postgres
+  strategy:
+    type: Recreate
+  template:                         # Template for the Pods in this deployment
+    metadata:
+      labels:                       # Labels to be applied to the Pods in this deployment
+        app: project-apt-containers
+        tier: postgres
+    spec:                           # The spec for the containers that will be run inside the Pods in this deployment
+      containers:
+        - image: postgres                # The container image
+          name: postgres
+          env:                        # Environment variables passed to the container
+            - name: POSTGRES_PASSWORD
+              value: "abc123"           # Read environment variables from kubernetes secrets
+          ports:
+            - containerPort: 5432       # The port that the container exposes
+              name: postgres
+---
+apiVersion: apps/v1           # API version
+kind: Deployment              # Type of kubernetes resource
+metadata:
+  name: project-apt-containers-server-deployment    # Name of the deployment
+  labels:                     # Labels that will be applied to this deployment
+    app: project-apt-containers-server
+spec:
+  replicas: 1                 # No. of replicas/pods to run in this deployment
+  selector:
+    matchLabels:              # The deployment applies to any pods mayching the specified labels
+      app: project-apt-containers-server
+  template:                   # Template for creating the pods in this deployment
+    metadata:
+      labels:                 # Labels that will be applied to each Pod in this deployment
+        app: project-apt-containers-server
+    spec:                     # Spec for the containers that will be run in the Pods
+      containers:
+        - name: project-apt-containers-server
+          image: kevinhugens/project-apt-containers
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8053 # The port that the container exposes
+          resources:
+            limits:
+              cpu: 0.2
+              memory: "200Mi"
+          env:                    # Environment variables supplied to the Pod
+            - name: POSTGRESQL_DB_USERNAME
+              value: "postgres"
+            - name: POSTGRESQL_DB_PASSWORD
+              value: "abc123"
+            - name: POSTGRESQL_DB_HOST
+              value: "project-apt-containers-postgres"
+---
+apiVersion: v1                      # API version
+kind: Service                       # Type of the kubernetes resource
+metadata:
+  name: project-apt-containers-server    # Name of the service
+  labels:                           # Labels that will be applied to this service
+    app: project-apt-containers-server
+spec:
+  type: NodePort                    # The service will be exposed by opening a Port on each node and proxying it. Allowing connections from outside the cluster
+  selector:
+    app: project-apt-containers-server   # The service exposes Pods with label `app=book-info-service-server`
+  ports:                            # Forward incoming connections on port 8080 to the target port 8051
+    - name: http
+      port: 8053
+      targetPort: 8053

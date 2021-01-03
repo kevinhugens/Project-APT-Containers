@@ -68,7 +68,7 @@ public class ContainerController {
     public void fillDB() {
         if (containerRepository.count() == 0) {
             containerRepository.save(new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam"));
-            containerRepository.save(new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen"));
+            containerRepository.save(new Container(2,1420.00, "Speelgoed", "Hong Kong", "Antwerpen"));
         }
     }
 }
