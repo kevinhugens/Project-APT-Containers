@@ -2,10 +2,9 @@ package com.example.containers.controller;
 
 import com.example.containers.model.Container;
 import com.example.containers.repository.ContainerRepository;
+import com.example.containers.service.ContainerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -16,40 +15,53 @@ public class ContainerController {
     @Autowired
     private ContainerRepository containerRepository;
 
+    @Autowired
+    private ContainerService containerService;
+
     @GetMapping("/containers/{id}")
     public Container getContainerById(
             @PathVariable int id) {
-        return containerRepository.findContainerById(id);
+        return containerService.getContainerById(id);
     }
 
     @GetMapping("/containers/schip/{schipId}")
     public List<Container> getContainerBySchipId(
             @PathVariable int schipId) {
-        return containerRepository.findContainersBySchipId(schipId);
+        return containerService.getContainersBySchipId(schipId);
     }
 
     @GetMapping("/containers/gewicht/{gewichtMin}/{gewichtMax}")
     public List<Container> getContainersByGewichtBetween(
             @PathVariable double gewichtMin, @PathVariable double gewichtMax) {
-        return containerRepository.findContainersByGewichtBetween(gewichtMin, gewichtMax);
+        return containerService.getContainersByGewichtBetween(gewichtMin, gewichtMax);
     }
 
     @GetMapping("/containers/inhoud/{inhoud}")
     public List<Container> getContainersByInhoudContaining(
             @PathVariable String inhoud) {
-        return containerRepository.findContainersByInhoudContaining(inhoud);
+        return containerService.getContainersByInhoud(inhoud);
     }
 
     @GetMapping("/containers/startlocatie/{startLocatie}")
     public List<Container> getContainersByStartLocatieContaining(
             @PathVariable String startLocatie) {
-        return containerRepository.findContainersByStartLocatieContaining(startLocatie);
+        return containerService.getContainersByStartLocatie(startLocatie);
     }
 
     @GetMapping("/containers/eindlocatie/{eindLocatie}")
     public List<Container> getContainersByEindLocatieContaining(
             @PathVariable String eindLocatie) {
-        return containerRepository.findContainersByEindLocatieContaining(eindLocatie);
+        return containerService.getContainersByEindLocatie(eindLocatie);
+    }
+
+    @PutMapping("/containers/update")
+    public Container updateContainer(@RequestBody Container container){
+        return containerService.updateContainer(container);
+    }
+
+    @PostMapping("/containers/insert")
+    public Container insertContainer(@RequestBody Container container) {
+        return containerService.insertContainer(container);
     }
 
     @PostConstruct()
