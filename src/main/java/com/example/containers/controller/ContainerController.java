@@ -24,6 +24,11 @@ public class ContainerController {
         return containerService.getContainerById(id);
     }
 
+    @GetMapping("/containers")
+    public List<Container> getAllContainers() {
+        return containerService.getAllContainers();
+    }
+
     @GetMapping("/containers/schip/{schipId}")
     public List<Container> getContainerBySchipId(
             @PathVariable int schipId) {
@@ -62,6 +67,12 @@ public class ContainerController {
     @PostMapping("/containers/insert")
     public Container insertContainer(@RequestBody Container container) {
         return containerService.insertContainer(container);
+    }
+
+    @DeleteMapping("containers/delete/{id}")
+    public void deleteContainerById(@PathVariable int id){
+        //logging
+        containerService.deleteContainer(id);
     }
 
     @PostConstruct()

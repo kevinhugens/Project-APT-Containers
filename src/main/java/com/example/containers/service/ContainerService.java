@@ -25,6 +25,10 @@ public class ContainerService {
         return container;
     }
 
+    public List<Container> getAllContainers() {
+        return containerRepository.findAll();
+    }
+
     public List<Container> getContainersBySchipId(int schipID) {
         List<Container> containers;
         containers = containerRepository.findContainersBySchipId(schipID);
@@ -81,6 +85,10 @@ public class ContainerService {
 
     public Container insertContainer(Container container) {
         return containerRepository.save(container);
+    }
+
+    public void deleteContainer(int containerID) {
+        containerRepository.deleteById(containerID);
     }
 
 }
