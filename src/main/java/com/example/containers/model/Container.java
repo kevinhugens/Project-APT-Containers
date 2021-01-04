@@ -27,15 +27,18 @@ public class Container {
 
     private String eindLocatie;
 
+    private String serieCode;
+
     public Container() {
 
     }
 
-    public Container(int schipId, double gewicht, String inhoud, String startLocatie, String eindLocatie) {
+    public Container(int schipId, double gewicht, String inhoud, String startLocatie, String eindLocatie, String serieCode) {
         this.schipId = schipId;
         this.gewicht = gewicht;
         this.inhoud = inhoud;
         this.startLocatie = startLocatie;
         this.eindLocatie = eindLocatie;
+        this.serieCode = serieCode;
     }
 }

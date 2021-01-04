@@ -18,12 +18,6 @@ public class ContainerController {
     @Autowired
     private ContainerService containerService;
 
-    @GetMapping("/containers/{id}")
-    public Container getContainerById(
-            @PathVariable int id) {
-        return containerService.getContainerById(id);
-    }
-
     @GetMapping("/containers")
     public List<Container> getAllContainers() {
         return containerService.getAllContainers();
@@ -45,6 +39,12 @@ public class ContainerController {
     public List<Container> getContainersByInhoudContaining(
             @PathVariable String inhoud) {
         return containerService.getContainersByInhoud(inhoud);
+    }
+
+    @GetMapping("/containers/serieCode/{serieCode}")
+    public Container getContainersBySerieCode(
+            @PathVariable String serieCode) {
+        return containerService.getContainerBySerieCode(serieCode);
     }
 
     @GetMapping("/containers/startlocatie/{startLocatie}")
@@ -78,8 +78,8 @@ public class ContainerController {
     @PostConstruct()
     public void fillDB() {
         if (containerRepository.count() == 0) {
-            containerRepository.save(new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam"));
-            containerRepository.save(new Container(2,1420.00, "Speelgoed", "Hong Kong", "Antwerpen"));
+            containerRepository.save(new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123"));
+            containerRepository.save(new Container(2,1420.00, "Speelgoed", "Hong Kong", "Antwerpen","DEF456"));
         }
     }
 }

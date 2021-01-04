@@ -18,10 +18,9 @@ public class ContainerService {
     @Autowired
     private ContainerRepository containerRepository;
 
-    public Container getContainerById(int id) {
+    public Container getContainerBySerieCode(String serieCode) {
         Container container;
-        container = containerRepository.findContainerById(id);
-
+        container = containerRepository.findContainerBySerieCode(serieCode);
         return container;
     }
 

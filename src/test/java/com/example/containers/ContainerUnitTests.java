@@ -35,7 +35,7 @@ public class ContainerUnitTests {
 
     @Test
     public void unitTestGetContainerBySchipId() throws Exception {
-        Container container3 = new Container(3,2500.00, "Schoenen", "New York", "Antwerpen");
+        Container container3 = new Container(3,2500.00, "Schoenen", "New York", "Antwerpen","HIJ789");
 
         List<Container> containers = new ArrayList<>();
         containers.add(container3);
@@ -49,13 +49,14 @@ public class ContainerUnitTests {
                 .andExpect(jsonPath("$.gewicht", is(2500.00)))
                 .andExpect(jsonPath("$.inhoud", is("Schoenen")))
                 .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Antwerpen")));
+                .andExpect(jsonPath("$.eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$.serieCode", is("HIJ789")));
     }
 
     @Test
     public void unitTestGetContainersBetweenGewicht() throws Exception {
-        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam");
-        Container container2 = new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen");
+        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
+        Container container2 = new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen","DEF456");
 
         List<Container> containers = new ArrayList<>();
         containers.add(container1);
@@ -72,16 +73,18 @@ public class ContainerUnitTests {
                 .andExpect(jsonPath("$[0].inhoud", is("Koelkasten")))
                 .andExpect(jsonPath("$[0].startLocatie", is("New York")))
                 .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].serieCode", is("ABC123")))
                 .andExpect(jsonPath("$[0].schipId", is(1)))
                 .andExpect(jsonPath("$[0].gewicht", is(1420.00)))
                 .andExpect(jsonPath("$[0].inhoud", is("Speelgoed")))
                 .andExpect(jsonPath("$[0].startLocatie", is("Hong Kong")))
-                .andExpect(jsonPath("$[0].eindLocatie", is("Antwerpen"))) ;
+                .andExpect(jsonPath("$[0].eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$[0].serieCode", is("DEF456")));
     }
 
     @Test
     public void unitTestGetByInhoud() throws Exception {
-        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam");
+        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
 
         List<Container> containers = new ArrayList<>();
         containers.add(container1);
@@ -100,7 +103,7 @@ public class ContainerUnitTests {
 
     @Test
     public void unitTestGetByStartLocatie() throws Exception {
-        Container container4 = new Container(2,1000.00, "Eten", "Amsterdam", "Dover");
+        Container container4 = new Container(2,1000.00, "Eten", "Amsterdam", "Dover","KLM012");
 
         List<Container> containers = new ArrayList<>();
         containers.add(container4);
@@ -119,7 +122,7 @@ public class ContainerUnitTests {
 
     @Test
     public void unitTestGetByEindLocatie() throws Exception {
-        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam");
+        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
 
         List<Container> containers = new ArrayList<>();
         containers.add(container1);
