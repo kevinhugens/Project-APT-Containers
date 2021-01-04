@@ -29,6 +29,11 @@ public class ContainerController {
         return containerService.getAllContainers();
     }
 
+    @GetMapping("/containers/serieCode/{serieCode}")
+    public Container getContainerBySerieCode(@PathVariable String serieCode) {
+        return containerService.getContainerBySerieCode(serieCode);
+    }
+
     @GetMapping("/containers/schip/{schipId}")
     public List<Container> getContainerBySchipId(
             @PathVariable int schipId) {
@@ -78,8 +83,8 @@ public class ContainerController {
     @PostConstruct()
     public void fillDB() {
         if (containerRepository.count() == 0) {
-            containerRepository.save(new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam"));
-            containerRepository.save(new Container(2,1420.00, "Speelgoed", "Hong Kong", "Antwerpen"));
+            containerRepository.save(new Container(1, "container1",2300.00, "Koelkasten", "New York", "Amsterdam"));
+            containerRepository.save(new Container(2,"container2",1420.00, "Speelgoed", "Hong Kong", "Antwerpen"));
         }
     }
 }

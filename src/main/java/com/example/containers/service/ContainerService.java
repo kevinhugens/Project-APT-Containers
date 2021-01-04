@@ -29,6 +29,13 @@ public class ContainerService {
         return containerRepository.findAll();
     }
 
+    public Container getContainerBySerieCode(String serieCode) {
+        Container container;
+        container = containerRepository.findContainerByserieCode(serieCode);
+        return container;
+    }
+
+
     public List<Container> getContainersBySchipId(int schipID) {
         List<Container> containers;
         containers = containerRepository.findContainersBySchipId(schipID);
@@ -77,6 +84,7 @@ public class ContainerService {
         newContainer.setGewicht(container.getGewicht());
         newContainer.setStartLocatie(container.getStartLocatie());
         newContainer.setEindLocatie(container.getEindLocatie());
+        newContainer.setSerieCode(container.getSerieCode());
 
         containerRepository.save(newContainer);
 
