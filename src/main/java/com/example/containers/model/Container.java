@@ -18,15 +18,10 @@ public class Container {
     private int id;
 
     private int schipId;
-
     private String serieCode;
-
     private double gewicht;
-
     private String inhoud;
-
     private String startLocatie;
-
     private String eindLocatie;
 
     public Container() {
