@@ -13,24 +13,19 @@ import javax.persistence.Id;
 @Setter
 public class Container {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private int schipId;
-
     private double gewicht;
-
     private String inhoud;
-
     private String startLocatie;
-
     private String eindLocatie;
-
     private String serieCode;
 
     public Container() {
-
     }
 
     public Container(int schipId, double gewicht, String inhoud, String startLocatie, String eindLocatie, String serieCode) {

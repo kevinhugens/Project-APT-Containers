@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 public class ContainerController {
 
+
     @Autowired
     private ContainerRepository containerRepository;
 
@@ -31,7 +32,8 @@ public class ContainerController {
 
     @GetMapping("/containers/gewicht/{gewichtMin}/{gewichtMax}")
     public List<Container> getContainersByGewichtBetween(
-            @PathVariable double gewichtMin, @PathVariable double gewichtMax) {
+            @PathVariable double gewichtMin,
+            @PathVariable double gewichtMax) {
         return containerService.getContainersByGewichtBetween(gewichtMin, gewichtMax);
     }
 
@@ -60,18 +62,20 @@ public class ContainerController {
     }
 
     @PutMapping("/containers/update")
-    public Container updateContainer(@RequestBody Container container){
+    public Container updateContainer(
+            @RequestBody Container container){
         return containerService.updateContainer(container);
     }
 
     @PostMapping("/containers/insert")
-    public Container insertContainer(@RequestBody Container container) {
+    public Container insertContainer(
+            @RequestBody Container container) {
         return containerService.insertContainer(container);
     }
 
     @DeleteMapping("containers/delete/{id}")
-    public void deleteContainerById(@PathVariable int id){
-        //logging
+    public void deleteContainerById(
+            @PathVariable int id){
         containerService.deleteContainer(id);
     }
 
