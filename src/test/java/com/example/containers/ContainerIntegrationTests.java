@@ -30,10 +30,10 @@ public class ContainerIntegrationTests {
     @Autowired
     private ContainerRepository containerRepository;
 
-    private Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam");
-    private Container container2 = new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen");
-    private Container container3 = new Container(3,2500.00, "Schoenen", "New York", "Antwerpen");
-    private Container container4 = new Container(2,1000.00, "Eten", "Amsterdam", "Dover");
+    private Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
+    private Container container2 = new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen","DEF456");
+    private Container container3 = new Container(3,2500.00, "Schoenen", "New York", "Antwerpen","HIJ789");
+    private Container container4 = new Container(2,1000.00, "Eten", "Amsterdam", "Dover","KLM012");
 
     @BeforeEach
     public void beforeAllTests() {
@@ -58,7 +58,8 @@ public class ContainerIntegrationTests {
                 .andExpect(jsonPath("$.gewicht", is(2500.00)))
                 .andExpect(jsonPath("$.inhoud", is("Schoenen")))
                 .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Antwerpen")));
+                .andExpect(jsonPath("$.eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$.serieCode", is("KLM012")));
     }
 
     @Test
@@ -78,11 +79,13 @@ public class ContainerIntegrationTests {
                 .andExpect(jsonPath("$[0].inhoud", is("Koelkasten")))
                 .andExpect(jsonPath("$[0].startLocatie", is("New York")))
                 .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].serieCode", is("ABC123")))
                 .andExpect(jsonPath("$[0].schipId", is(1)))
                 .andExpect(jsonPath("$[0].gewicht", is(1420.00)))
                 .andExpect(jsonPath("$[0].inhoud", is("Speelgoed")))
                 .andExpect(jsonPath("$[0].startLocatie", is("Hong Kong")))
-                .andExpect(jsonPath("$[0].eindLocatie", is("Antwerpen"))) ;
+                .andExpect(jsonPath("$[0].eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$[0].serieCode", is("DEF456")));;
     }
 
     @Test
@@ -94,7 +97,8 @@ public class ContainerIntegrationTests {
                 .andExpect(jsonPath("$.gewicht", is(2300.00)))
                 .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
                 .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")));
+                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$.serieCode", is("ABC123")));
     }
 
     @Test
@@ -106,7 +110,8 @@ public class ContainerIntegrationTests {
                 .andExpect(jsonPath("$.gewicht", is(1000.00)))
                 .andExpect(jsonPath("$.inhoud", is("Eten")))
                 .andExpect(jsonPath("$.startLocatie", is("Amsterdam")))
-                .andExpect(jsonPath("$.eindLocatie", is("Dover")));
+                .andExpect(jsonPath("$.eindLocatie", is("Dover")))
+                .andExpect(jsonPath("$.serieCode", is("KLM012")));
     }
 
     @Test
@@ -118,6 +123,7 @@ public class ContainerIntegrationTests {
                 .andExpect(jsonPath("$.gewicht", is(2300.00)))
                 .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
                 .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")));
+                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$.serieCode", is("ABC123")));
     }
 }

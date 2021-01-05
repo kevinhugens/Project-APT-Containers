@@ -12,28 +12,15 @@ import java.util.List;
 @RestController
 public class ContainerController {
 
-
     @Autowired
     private ContainerRepository containerRepository;
 
     @Autowired
     private ContainerService containerService;
 
-    @GetMapping("/containers/{id}")
-    public Container getContainerById(
-            @PathVariable int id) {
-        return containerService.getContainerById(id);
-    }
-
     @GetMapping("/containers")
     public List<Container> getAllContainers() {
         return containerService.getAllContainers();
-    }
-
-    @GetMapping("/containers/serieCode/{serieCode}")
-    public Container getContainerBySerieCode(
-            @PathVariable String serieCode) {
-        return containerService.getContainerBySerieCode(serieCode);
     }
 
     @GetMapping("/containers/schip/{schipId}")
@@ -44,8 +31,7 @@ public class ContainerController {
 
     @GetMapping("/containers/gewicht/{gewichtMin}/{gewichtMax}")
     public List<Container> getContainersByGewichtBetween(
-            @PathVariable double gewichtMin,
-            @PathVariable double gewichtMax) {
+            @PathVariable double gewichtMin, @PathVariable double gewichtMax) {
         return containerService.getContainersByGewichtBetween(gewichtMin, gewichtMax);
     }
 
@@ -53,6 +39,12 @@ public class ContainerController {
     public List<Container> getContainersByInhoudContaining(
             @PathVariable String inhoud) {
         return containerService.getContainersByInhoud(inhoud);
+    }
+
+    @GetMapping("/containers/serieCode/{serieCode}")
+    public Container getContainersBySerieCode(
+            @PathVariable String serieCode) {
+        return containerService.getContainerBySerieCode(serieCode);
     }
 
     @GetMapping("/containers/startlocatie/{startLocatie}")
@@ -68,28 +60,26 @@ public class ContainerController {
     }
 
     @PutMapping("/containers/update")
-    public Container updateContainer(
-            @RequestBody Container container){
+    public Container updateContainer(@RequestBody Container container){
         return containerService.updateContainer(container);
     }
 
     @PostMapping("/containers/insert")
-    public Container insertContainer(
-            @RequestBody Container container) {
+    public Container insertContainer(@RequestBody Container container) {
         return containerService.insertContainer(container);
     }
 
     @DeleteMapping("containers/delete/{id}")
-    public void deleteContainerById(
-            @PathVariable int id){
+    public void deleteContainerById(@PathVariable int id){
+        //logging
         containerService.deleteContainer(id);
     }
 
     @PostConstruct()
     public void fillDB() {
         if (containerRepository.count() == 0) {
-            containerRepository.save(new Container(1, "container1",2300.00, "Koelkasten", "New York", "Amsterdam"));
-            containerRepository.save(new Container(2,"container2",1420.00, "Speelgoed", "Hong Kong", "Antwerpen"));
+            containerRepository.save(new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123"));
+            containerRepository.save(new Container(2,1420.00, "Speelgoed", "Hong Kong", "Antwerpen","DEF456"));
         }
     }
 }

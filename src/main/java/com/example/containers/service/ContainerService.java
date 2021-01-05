@@ -13,29 +13,20 @@ import java.util.logging.Logger;
 public class ContainerService {
 
 
+    Logger logger = Logger.getLogger(ContainerService.class.getName());
+
     @Autowired
     private ContainerRepository containerRepository;
 
-    Logger logger = Logger.getLogger(ContainerService.class.getName());
-
-    public Container getContainerById(int id) {
+    public Container getContainerBySerieCode(String serieCode) {
         Container container;
-        container = containerRepository.findContainerById(id);
-
+        container = containerRepository.findContainerBySerieCode(serieCode);
         return container;
     }
 
     public List<Container> getAllContainers() {
         return containerRepository.findAll();
     }
-
-    public Container getContainerBySerieCode(String serieCode) {
-        Container container;
-        container = containerRepository.findContainerByserieCode(serieCode);
-
-        return container;
-    }
-
 
     public List<Container> getContainersBySchipId(int schipID) {
         List<Container> containers;
@@ -55,12 +46,10 @@ public class ContainerService {
         if (minGewicht >= 0 && maxGewicht >= 0) {
             List<Container> containers;
             containers = containerRepository.findContainersByGewichtBetween(minGewicht, maxGewicht);
-
             return containers;
         } else {
             logger.setLevel(Level.INFO);
             logger.info("Gewicht was onder 0");
-
             return null;
         }
     }
@@ -87,7 +76,6 @@ public class ContainerService {
         newContainer.setGewicht(container.getGewicht());
         newContainer.setStartLocatie(container.getStartLocatie());
         newContainer.setEindLocatie(container.getEindLocatie());
-        newContainer.setSerieCode(container.getSerieCode());
 
         containerRepository.save(newContainer);
 
