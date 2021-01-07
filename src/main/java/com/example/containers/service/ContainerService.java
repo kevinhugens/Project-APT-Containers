@@ -79,7 +79,7 @@ public class ContainerService {
     }
 
     public Container updateContainer(Container container){
-        Container newContainer = containerRepository.findContainerById(container.getId());
+        Container newContainer = containerRepository.findById(container.getId()).orElseThrow();
 
         newContainer.setSchipId(container.getSchipId());
         newContainer.setInhoud(container.getInhoud());
