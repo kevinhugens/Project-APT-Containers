@@ -18,6 +18,13 @@ public class ContainerService {
 
     Logger logger = Logger.getLogger(ContainerService.class.getName());
 
+    public Container getByContainerId(int id) {
+        Container container;
+        container = containerRepository.findById(id).orElseThrow();
+
+        return container;
+    }
+
     public Container getContainerBySerieCode(String serieCode) {
         Container container;
         container = containerRepository.findContainerBySerieCode(serieCode);

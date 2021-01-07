@@ -19,6 +19,12 @@ public class ContainerController {
     @Autowired
     private ContainerService containerService;
 
+    @GetMapping("/containers/{id}")
+    public Container getContainerById(
+            @PathVariable int id) {
+        return containerService.getByContainerId(id);
+    }
+
     @GetMapping("/containers")
     public List<Container> getAllContainers() {
         return containerService.getAllContainers();

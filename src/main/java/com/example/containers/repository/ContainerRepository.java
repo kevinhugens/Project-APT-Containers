@@ -9,9 +9,6 @@ import java.util.List;
 @Repository
 public interface ContainerRepository extends JpaRepository<Container, Integer> {
 
-
-    Container findContainerById(int id);
-
     Container findContainerBySerieCode(String serieCode);
 
     List<Container> findContainersBySchipId(int schipId);
