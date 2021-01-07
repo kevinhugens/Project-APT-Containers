@@ -34,6 +34,7 @@ public class ContainerIntegrationTests {
     private ObjectMapper mapper = new ObjectMapper();
 
     private Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
+
     private Container container2 = new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen","DEF456");
     private Container container3 = new Container(3,2500.00, "Schoenen", "New York", "Antwerpen","HIJ789");
     private Container container4 = new Container(2,1000.00, "Eten", "Amsterdam", "Dover","KLM012");
@@ -57,12 +58,12 @@ public class ContainerIntegrationTests {
         mockMvc.perform(get("/containers/schip/{schipId}", 3))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.schipId", is(3)))
-                .andExpect(jsonPath("$.gewicht", is(2500.00)))
-                .andExpect(jsonPath("$.inhoud", is("Schoenen")))
-                .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Antwerpen")))
-                .andExpect(jsonPath("$.serieCode", is("HIJ789")));
+                .andExpect(jsonPath("$[0].schipId", is(3)))
+                .andExpect(jsonPath("$[0].gewicht", is(2500.00)))
+                .andExpect(jsonPath("$[0].inhoud", is("Schoenen")))
+                .andExpect(jsonPath("$[0].startLocatie", is("New York")))
+                .andExpect(jsonPath("$[0].eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$[0].serieCode", is("HIJ789")));
     }
 
     @Test
@@ -96,12 +97,12 @@ public class ContainerIntegrationTests {
                 .andExpect(jsonPath("$[0].startLocatie", is("New York")))
                 .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
                 .andExpect(jsonPath("$[0].serieCode", is("ABC123")))
-                .andExpect(jsonPath("$[0].schipId", is(1)))
-                .andExpect(jsonPath("$[0].gewicht", is(1420.00)))
-                .andExpect(jsonPath("$[0].inhoud", is("Speelgoed")))
-                .andExpect(jsonPath("$[0].startLocatie", is("Hong Kong")))
-                .andExpect(jsonPath("$[0].eindLocatie", is("Antwerpen")))
-                .andExpect(jsonPath("$[0].serieCode", is("DEF456")));;
+                .andExpect(jsonPath("$[1].schipId", is(1)))
+                .andExpect(jsonPath("$[1].gewicht", is(1420.00)))
+                .andExpect(jsonPath("$[1].inhoud", is("Speelgoed")))
+                .andExpect(jsonPath("$[1].startLocatie", is("Hong Kong")))
+                .andExpect(jsonPath("$[1].eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$[1].serieCode", is("DEF456")));;
     }
 
     @Test
@@ -109,17 +110,17 @@ public class ContainerIntegrationTests {
         mockMvc.perform(get("/containers/inhoud/{inhoud}", "Koelkasten"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.schipId", is(1)))
-                .andExpect(jsonPath("$.gewicht", is(2300.00)))
-                .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
-                .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
-                .andExpect(jsonPath("$.serieCode", is("ABC123")));
+                .andExpect(jsonPath("$[0].schipId", is(1)))
+                .andExpect(jsonPath("$[0].gewicht", is(2300.00)))
+                .andExpect(jsonPath("$[0].inhoud", is("Koelkasten")))
+                .andExpect(jsonPath("$[0].startLocatie", is("New York")))
+                .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].serieCode", is("ABC123")));;
     }
 
     @Test
     public void testGetByStartLocatie() throws Exception {
-        mockMvc.perform(get("/containers/startlocatie/{startLocatie}", "Amsterdam"))
+        mockMvc.perform(get("/containers/startLocatie/{startLocatie}", "Amsterdam"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.schipId", is(2)))
@@ -132,7 +133,7 @@ public class ContainerIntegrationTests {
 
     @Test
     public void testGetByEindLocatie() throws Exception {
-        mockMvc.perform(get("/containers/eindlocatie/{eindLocatie}", "Amsterdam"))
+        mockMvc.perform(get("/containers/eindLocatie/{eindLocatie}", "Amsterdam"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.schipId", is(1)))
