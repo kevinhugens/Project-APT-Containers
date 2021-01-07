@@ -162,7 +162,7 @@ public class ContainerIntegrationTests {
 
     @Test
     public void testDeleteContainer() throws Exception {
-        mockMvc.perform(delete("containers/delete/{id}", 1)
+        mockMvc.perform(delete("/containers/delete/{id}", 1)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
