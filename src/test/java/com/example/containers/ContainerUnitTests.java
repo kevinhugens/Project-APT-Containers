@@ -17,7 +17,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -98,7 +98,8 @@ public class ContainerUnitTests {
                 .andExpect(jsonPath("$.gewicht", is(2300.00)))
                 .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
                 .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")));
+                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$.serieCode", is("ABC123")));;
     }
 
     @Test
@@ -117,7 +118,8 @@ public class ContainerUnitTests {
                 .andExpect(jsonPath("$.gewicht", is(1000.00)))
                 .andExpect(jsonPath("$.inhoud", is("Eten")))
                 .andExpect(jsonPath("$.startLocatie", is("Amsterdam")))
-                .andExpect(jsonPath("$.eindLocatie", is("Dover")));
+                .andExpect(jsonPath("$.eindLocatie", is("Dover")))
+                .andExpect(jsonPath("$.serieCode", is("KLM012")));;
     }
 
     @Test
@@ -136,6 +138,36 @@ public class ContainerUnitTests {
                 .andExpect(jsonPath("$.gewicht", is(2300.00)))
                 .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
                 .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")));
+                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$.serieCode", is("ABC123")));;
+    }
+
+    @Test
+    public void unitTestPostContainer() throws Exception {
+
+        Container containerTest = new Container(2,4300.00, "Tennisballen", "Helsinki", "Amsterdam","da57e");
+
+        mockMvc.perform(post("/containers/insert")
+                .content(mapper.writeValueAsString(containerTest))
+                .contentType("application/json"))
+                .andExpect(content().contentType("application/json"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.schipId", is(2)))
+                .andExpect(jsonPath("$.gewicht", is(4300.00)))
+                .andExpect(jsonPath("$.inhoud", is("Tennisballen")))
+                .andExpect(jsonPath("$.startLocatie", is("Helsinki")))
+                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$.serieCode", is("da57e")));
+    }
+
+    @Test
+    public void unitTestDeleteContainer() throws Exception {
+        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
+
+        given(containerRepository.findContainerById(1)).willReturn(container1);
+
+        mockMvc.perform(delete("containers/delete/{id}", 1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
