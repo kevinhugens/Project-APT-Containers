@@ -91,7 +91,7 @@ public class ContainerUnitTests {
 
         given(containerRepository.findContainersByInhoudContaining("Koelkasten")).willReturn(containers);
 
-        mockMvc.perform(get("/containers/inhoud/{inhoud}", "Amsterdam"))
+        mockMvc.perform(get("/containers/inhoud/{inhoud}", "Koelkasten"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].schipId", is(1)))
