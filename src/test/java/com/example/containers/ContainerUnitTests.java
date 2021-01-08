@@ -114,12 +114,12 @@ public class ContainerUnitTests {
         mockMvc.perform(get("/containers/startlocatie/{startLocatie}", "Amsterdam"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.schipId", is(2)))
-                .andExpect(jsonPath("$.gewicht", is(1000.00)))
-                .andExpect(jsonPath("$.inhoud", is("Eten")))
-                .andExpect(jsonPath("$.startLocatie", is("Amsterdam")))
-                .andExpect(jsonPath("$.eindLocatie", is("Dover")))
-                .andExpect(jsonPath("$.serieCode", is("KLM012")));;
+                .andExpect(jsonPath("$[0].schipId", is(2)))
+                .andExpect(jsonPath("$[0].gewicht", is(1000.00)))
+                .andExpect(jsonPath("$[0].inhoud", is("Eten")))
+                .andExpect(jsonPath("$[0].startLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].eindLocatie", is("Dover")))
+                .andExpect(jsonPath("$[0].serieCode", is("KLM012")));;
     }
 
     @Test
@@ -134,12 +134,12 @@ public class ContainerUnitTests {
         mockMvc.perform(get("/containers/eindlocatie/{eindLocatie}", "Amsterdam"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.schipId", is(1)))
-                .andExpect(jsonPath("$.gewicht", is(2300.00)))
-                .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
-                .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
-                .andExpect(jsonPath("$.serieCode", is("ABC123")));;
+                .andExpect(jsonPath("$[0].schipId", is(1)))
+                .andExpect(jsonPath("$[0].gewicht", is(2300.00)))
+                .andExpect(jsonPath("$[0].inhoud", is("Koelkasten")))
+                .andExpect(jsonPath("$[0].startLocatie", is("New York")))
+                .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].serieCode", is("ABC123")));;
     }
 
     @Test
