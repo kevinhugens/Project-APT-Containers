@@ -94,12 +94,12 @@ public class ContainerUnitTests {
         mockMvc.perform(get("/containers/inhoud/{inhoud}", "Amsterdam"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.schipId", is(1)))
-                .andExpect(jsonPath("$.gewicht", is(2300.00)))
-                .andExpect(jsonPath("$.inhoud", is("Koelkasten")))
-                .andExpect(jsonPath("$.startLocatie", is("New York")))
-                .andExpect(jsonPath("$.eindLocatie", is("Amsterdam")))
-                .andExpect(jsonPath("$.serieCode", is("ABC123")));;
+                .andExpect(jsonPath("$[0].schipId", is(1)))
+                .andExpect(jsonPath("$[0].gewicht", is(2300.00)))
+                .andExpect(jsonPath("$[0].inhoud", is("Koelkasten")))
+                .andExpect(jsonPath("$[0].startLocatie", is("New York")))
+                .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].serieCode", is("ABC123")));;
     }
 
     @Test
