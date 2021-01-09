@@ -3,6 +3,7 @@ package com.example.containers;
 import com.example.containers.model.Container;
 import com.example.containers.repository.ContainerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,6 +33,47 @@ public class ContainerUnitTests {
     private ContainerRepository containerRepository;
 
     private ObjectMapper mapper = new ObjectMapper();
+
+    @Test
+    public void testGetAll() throws Exception {
+        Container container1 = new Container(1,2300.00, "Koelkasten", "New York", "Amsterdam","ABC123");
+        Container container2 = new Container(1,1420.00, "Speelgoed", "Hong Kong", "Antwerpen","DEF456");
+
+        List<Container> containers = new ArrayList<>();
+        containers.add(container1);
+        containers.add(container2);
+
+        given(containerRepository.findAll()).willReturn(containers);
+
+        mockMvc.perform(get("/containers"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(2)))
+                .andExpect(jsonPath("$[0].schipId", is(1)))
+                .andExpect(jsonPath("$[0].gewicht", is(2300.00)))
+                .andExpect(jsonPath("$[0].inhoud", is("Koelkasten")))
+                .andExpect(jsonPath("$[0].startLocatie", is("New York")))
+                .andExpect(jsonPath("$[0].eindLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[0].serieCode", is("ABC123")))
+                .andExpect(jsonPath("$[1].schipId", is(1)))
+                .andExpect(jsonPath("$[1].gewicht", is(1420.00)))
+                .andExpect(jsonPath("$[1].inhoud", is("Speelgoed")))
+                .andExpect(jsonPath("$[1].startLocatie", is("Hong Kong")))
+                .andExpect(jsonPath("$[1].eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$[1].serieCode", is("DEF456")))
+                .andExpect(jsonPath("$[2].schipId", is(3)))
+                .andExpect(jsonPath("$[2].gewicht", is(2500.00)))
+                .andExpect(jsonPath("$[2].inhoud", is("Schoenen")))
+                .andExpect(jsonPath("$[2].startLocatie", is("New York")))
+                .andExpect(jsonPath("$[2].eindLocatie", is("Antwerpen")))
+                .andExpect(jsonPath("$[2].serieCode", is("HIJ789")))
+                .andExpect(jsonPath("$[3].schipId", is(2)))
+                .andExpect(jsonPath("$[3].gewicht", is(1000.00)))
+                .andExpect(jsonPath("$[3].inhoud", is("Eten")))
+                .andExpect(jsonPath("$[3].startLocatie", is("Amsterdam")))
+                .andExpect(jsonPath("$[3].eindLocatie", is("Dover")))
+                .andExpect(jsonPath("$[3].serieCode", is("KLM012")));
+    }
 
     @Test
     public void unitTestGetContainerBySchipId() throws Exception {
